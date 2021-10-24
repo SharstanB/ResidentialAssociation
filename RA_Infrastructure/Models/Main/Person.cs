@@ -50,6 +50,11 @@ namespace RA_Infrastructure.Models.Main
         [Column(TypeName = "decimal(15,5)")]
         public int Income { set; get; }
 
+        [ForeignKey(nameof(Member))]
+        public int MemberId { get; set; }
+
+        public Member Member { get; set; }
+
 
 
     }

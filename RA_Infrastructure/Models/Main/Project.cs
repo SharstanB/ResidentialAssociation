@@ -1,4 +1,6 @@
 ﻿using RA_Infrastructure.Models.Base;
+using RA_Infrastructure.Models.Main;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -17,6 +19,8 @@ namespace RA_Infrastructure.Models
         public string ProjectRegion { set; get; }
         [Column(TypeName = "nvarchar(200)")]
         public string ProjectCategory { set; get; }
+
+        public ICollection<Residence> Residences { get; set; }
 
     }
 }

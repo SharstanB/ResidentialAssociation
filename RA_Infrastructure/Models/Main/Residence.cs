@@ -29,5 +29,10 @@ namespace RA_Infrastructure.Models.Main
         [Column( TypeName = "decimal(20,3)")]
         public double FinalCost { get; set; }
 
+        [ForeignKey(nameof(Project))]
+        public int ProjectId { get; set; }
+
+        public Project Project { get; set; }
+
     }
 }

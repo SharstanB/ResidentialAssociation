@@ -4,4 +4,8 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RA_SqlSever\RA_SqlSever.csproj" />
+  </ItemGroup>
+
 </Project>
