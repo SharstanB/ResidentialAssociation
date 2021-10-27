@@ -1,4 +1,5 @@
 ﻿using RA_Infrastructure.Models.Base;
+using RA_Infrastructure.Models.Main;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RA_Infrastructure.Models.Finance
+namespace RA_Infrastructure.Models.Accounting
 {
     [Table("Finance", Schema = "Finance")]
 
@@ -21,7 +22,10 @@ namespace RA_Infrastructure.Models.Finance
         [Column( TypeName = "decimal(20,3)")]
         public double Value { get; set; }
 
+        [ForeignKey(nameof(Residence))]
+        public int ResidenceId { get; set; }
 
+        public Residence Residence { get; set; }
 
 
     }

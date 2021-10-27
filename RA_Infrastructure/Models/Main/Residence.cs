@@ -1,5 +1,7 @@
 ﻿using RA_Infrastructure.Models.Base;
+using RA_Infrastructure.Models.Accounting;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -33,6 +35,10 @@ namespace RA_Infrastructure.Models.Main
         public int ProjectId { get; set; }
 
         public Project Project { get; set; }
+
+        public ICollection<Property> Properties { get; set; }
+
+        public ICollection<Finance> Finances { get; set; }
 
     }
 }

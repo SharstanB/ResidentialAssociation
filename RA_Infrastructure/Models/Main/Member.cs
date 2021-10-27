@@ -29,6 +29,9 @@ namespace RA_Infrastructure.Models.Main
 
         public Person Person { get; set; }
 
+        public ICollection<Property> FirstSides { set; get; } // متنازل
+
+        public ICollection<Property> SecondSides { set; get; }  //  متنازل له
 
 
     }

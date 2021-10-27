@@ -16,5 +16,22 @@ namespace RA_Infrastructure.Models.Main
         [Column(TypeName = "int")]
         public int DecisionNumber { set; get; }
 
+        [ForeignKey(nameof(Residence))]
+        public int ResidenceId { get; set; }
+
+        public Residence Residence { get; set; }
+
+        [ForeignKey(nameof(FirstSide))]
+        public int FirstSideId { get; set; }
+
+        public Member FirstSide { get; set; }
+
+        [ForeignKey(nameof(SecondSide))]
+        public int SecondSideId { get; set; }
+
+        public Member SecondSide { get; set; }
+
     }
+
+
 }

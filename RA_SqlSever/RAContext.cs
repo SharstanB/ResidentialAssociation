@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RA_Infrastructure.Models.Finance;
+using RA_Infrastructure.Models;
+using RA_Infrastructure.Models.Accounting;
 using RA_Infrastructure.Models.Main;
 using RA_Infrastructure.Models.Setting;
 
@@ -22,6 +23,20 @@ namespace RA_SqlSever
 
         public DbSet<Residence> Residences { get; set; }
 
+        public DbSet<Project> Projects { get; set; }
+
         public DbSet<Settings> Settings { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Member>().HasMany(t => t.FirstSides)
+            .WithOne(g => g.FirstSide)
+            .HasForeignKey(g => g.FirstSideId).OnDelete(DeleteBehavior.);
+            modelBuilder.Entity<Member>().HasMany(t => t.SecondSides)
+            .WithOne(g => g.SecondSide)
+            .HasForeignKey(g => g.SecondSideId).OnDelete(DeleteBehavior.ClientCascade);
+
+
+        }
     }
 }
