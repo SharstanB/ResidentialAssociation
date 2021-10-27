@@ -31,7 +31,7 @@ namespace RA_SqlSever
         {
             modelBuilder.Entity<Member>().HasMany(t => t.FirstSides)
             .WithOne(g => g.FirstSide)
-            .HasForeignKey(g => g.FirstSideId).OnDelete(DeleteBehavior.);
+            .HasForeignKey(g => g.FirstSideId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Member>().HasMany(t => t.SecondSides)
             .WithOne(g => g.SecondSide)
             .HasForeignKey(g => g.SecondSideId).OnDelete(DeleteBehavior.ClientCascade);
