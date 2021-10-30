@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RA_SqlSever;
 
 namespace RA_SqlSever.Migrations
 {
     [DbContext(typeof(RAContext))]
-    partial class RAContextModelSnapshot : ModelSnapshot
+    [Migration("20211030171600_fix-relationships")]
+    partial class fixrelationships
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -318,7 +320,7 @@ namespace RA_SqlSever.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Settings", "Setting");
+                    b.ToTable("ExpectedPrice", "Setting");
                 });
 
             modelBuilder.Entity("RA_Infrastructure.Models.Accounting.Finance", b =>

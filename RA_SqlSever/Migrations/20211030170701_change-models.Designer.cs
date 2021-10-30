@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RA_SqlSever;
 
 namespace RA_SqlSever.Migrations
 {
     [DbContext(typeof(RAContext))]
-    partial class RAContextModelSnapshot : ModelSnapshot
+    [Migration("20211030170701_change-models")]
+    partial class changemodels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,7 +43,7 @@ namespace RA_SqlSever.Migrations
                     b.Property<int>("FinanceType")
                         .HasColumnType("int");
 
-                    b.Property<int>("PropertyMemberId")
+                    b.Property<int>("ResidenceId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Value")
@@ -49,7 +51,7 @@ namespace RA_SqlSever.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PropertyMemberId");
+                    b.HasIndex("ResidenceId");
 
                     b.ToTable("Finance", "Finance");
                 });
@@ -169,7 +171,12 @@ namespace RA_SqlSever.Migrations
                     b.Property<int>("MembershipNumber")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ResidenceId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ResidenceId");
 
                     b.ToTable("Property", "Main");
                 });
@@ -196,7 +203,7 @@ namespace RA_SqlSever.Migrations
                     b.Property<int>("FirstSideId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PropertyId")
+                    b.Property<int>("ResidenceId")
                         .HasColumnType("int");
 
                     b.Property<int>("SecondSideId")
@@ -206,7 +213,7 @@ namespace RA_SqlSever.Migrations
 
                     b.HasIndex("FirstSideId");
 
-                    b.HasIndex("PropertyId");
+                    b.HasIndex("ResidenceId");
 
                     b.HasIndex("SecondSideId");
 
@@ -238,9 +245,6 @@ namespace RA_SqlSever.Migrations
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PropertyId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("RecordDate")
                         .HasColumnType("datetime2");
 
@@ -265,9 +269,6 @@ namespace RA_SqlSever.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectId");
-
-                    b.HasIndex("PropertyId")
-                        .IsUnique();
 
                     b.ToTable("Residence", "Main");
                 });
@@ -318,18 +319,18 @@ namespace RA_SqlSever.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Settings", "Setting");
+                    b.ToTable("ExpectedPrice", "Setting");
                 });
 
             modelBuilder.Entity("RA_Infrastructure.Models.Accounting.Finance", b =>
                 {
-                    b.HasOne("RA_Infrastructure.Models.Main.PropertyMember", "PropertyMember")
+                    b.HasOne("RA_Infrastructure.Models.Main.Residence", "Residence")
                         .WithMany("Finances")
-                        .HasForeignKey("PropertyMemberId")
+                        .HasForeignKey("ResidenceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("PropertyMember");
+                    b.Navigation("Residence");
                 });
 
             modelBuilder.Entity("RA_Infrastructure.Models.Main.Member", b =>
@@ -343,6 +344,15 @@ namespace RA_SqlSever.Migrations
                     b.Navigation("Person");
                 });
 
+            modelBuilder.Entity("RA_Infrastructure.Models.Main.Property", b =>
+                {
+                    b.HasOne("RA_Infrastructure.Models.Main.Residence", "Residence")
+                        .WithMany("Properties")
+                        .HasForeignKey("ResidenceId");
+
+                    b.Navigation("Residence");
+                });
+
             modelBuilder.Entity("RA_Infrastructure.Models.Main.PropertyMember", b =>
                 {
                     b.HasOne("RA_Infrastructure.Models.Main.Member", "FirstSide")
@@ -351,9 +361,9 @@ namespace RA_SqlSever.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("RA_Infrastructure.Models.Main.Property", "Property")
-                        .WithMany("PropertyMembers")
-                        .HasForeignKey("PropertyId")
+                    b.HasOne("RA_Infrastructure.Models.Main.Residence", "Residence")
+                        .WithMany()
+                        .HasForeignKey("ResidenceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -365,7 +375,7 @@ namespace RA_SqlSever.Migrations
 
                     b.Navigation("FirstSide");
 
-                    b.Navigation("Property");
+                    b.Navigation("Residence");
 
                     b.Navigation("SecondSide");
                 });
@@ -378,15 +388,7 @@ namespace RA_SqlSever.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RA_Infrastructure.Models.Main.Property", "Property")
-                        .WithOne("Residence")
-                        .HasForeignKey("RA_Infrastructure.Models.Main.Residence", "PropertyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Project");
-
-                    b.Navigation("Property");
                 });
 
             modelBuilder.Entity("RA_Infrastructure.Models.Main.Member", b =>
@@ -401,16 +403,11 @@ namespace RA_SqlSever.Migrations
                     b.Navigation("Member");
                 });
 
-            modelBuilder.Entity("RA_Infrastructure.Models.Main.Property", b =>
-                {
-                    b.Navigation("PropertyMembers");
-
-                    b.Navigation("Residence");
-                });
-
-            modelBuilder.Entity("RA_Infrastructure.Models.Main.PropertyMember", b =>
+            modelBuilder.Entity("RA_Infrastructure.Models.Main.Residence", b =>
                 {
                     b.Navigation("Finances");
+
+                    b.Navigation("Properties");
                 });
 
             modelBuilder.Entity("RA_Infrastructure.Models.Project", b =>

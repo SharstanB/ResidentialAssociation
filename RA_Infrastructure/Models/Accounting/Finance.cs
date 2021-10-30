@@ -22,10 +22,10 @@ namespace RA_Infrastructure.Models.Accounting
         [Column( TypeName = "decimal(20,3)")]
         public double Value { get; set; }
 
-        [ForeignKey(nameof(Residence))]
-        public int ResidenceId { get; set; }
+        [ForeignKey(nameof(PropertyMember))]
+        public int PropertyMemberId { get; set; }
 
-        public Residence Residence { get; set; }
+        public PropertyMember PropertyMember { get; set; }
 
 
     }

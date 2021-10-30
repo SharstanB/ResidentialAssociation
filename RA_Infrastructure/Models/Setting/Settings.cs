@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RA_Infrastructure.Models.Setting
 {
-    [Table("ExpectedPrice", Schema = "Setting")]
+    [Table("Settings", Schema = "Setting")]
     public class Settings : BaseModel
     {
         [Column(TypeName = "decimal(20,3)")]

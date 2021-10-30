@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RA_SqlSever;
 
 namespace RA_SqlSever.Migrations
 {
     [DbContext(typeof(RAContext))]
-    partial class RAContextModelSnapshot : ModelSnapshot
+    [Migration("20211030171808_fix-setting-model")]
+    partial class fixsettingmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

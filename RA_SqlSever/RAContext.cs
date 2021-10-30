@@ -26,6 +26,7 @@ namespace RA_SqlSever
         public DbSet<Project> Projects { get; set; }
 
         public DbSet<Settings> Settings { get; set; }
+        public DbSet<PropertyMember> PropertyMembers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,6 +44,11 @@ namespace RA_SqlSever
               .HasOne(a => a.Person)
               .WithOne(b => b.Member)
               .HasForeignKey<Member>(b => b.Member_ID);
+
+            modelBuilder.Entity<Property>()
+             .HasOne(a => a.Residence)
+             .WithOne(b => b.Property)
+             .HasForeignKey<Residence>(b => b.PropertyId);
 
 
         }

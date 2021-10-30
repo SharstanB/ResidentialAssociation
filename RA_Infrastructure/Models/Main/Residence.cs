@@ -15,15 +15,18 @@ namespace RA_Infrastructure.Models.Main
         [Column(TypeName = "nvarchar(200)")]
         public string ResidenceAddress { set; get; }
         [Column(TypeName = "int")]
-        public int RoomNumber { set; get; }
+        public int RoomNumber { set; get; }  /// رقم الفئة  - عدد الغرف
         [Column(TypeName = "nvarchar(100)")]
         public string SectionNumber { set; get; } //رقم المقسم
         [Column(TypeName = "int")]
-        public int ResidenceType { set; get; }
+        public int FloorNumber { set; get; } 
+
         [Column(TypeName = "nvarchar(100)")]
         public string ResidenceDirection { set; get; }
+
         [Column(TypeName = "int")]
         public int RecordNumber { set; get; }
+
         [Column(TypeName = "datetime2")]
         public DateTime RecordDate { get; set; }
         [Column( TypeName = "decimal(20,3)")]
@@ -36,9 +39,11 @@ namespace RA_Infrastructure.Models.Main
 
         public Project Project { get; set; }
 
-        public ICollection<Property> Properties { get; set; }
+        [ForeignKey(nameof(Property))]
+        public int PropertyId { get; set; }
+        public Property Property { get; set; }
 
-        public ICollection<Finance> Finances { get; set; }
+       // public ICollection<Finance> Finances { get; set; }
 
     }
 }

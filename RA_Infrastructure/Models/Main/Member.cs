@@ -14,7 +14,7 @@ namespace RA_Infrastructure.Models.Main
         [Column(TypeName = "int")]
         public int Member_ID { get; set; }
         [Column(TypeName = "datetime2")]
-        public DateTime AffiliationDate { get; set; } //تاريخ انتساب
+        public DateTime AcceptDate { get; set; } //تاريخ انتساب
         [Column(TypeName = "int")]
         public int SessionNumber { get; set; }
         [Column(TypeName = "int")]
@@ -23,15 +23,11 @@ namespace RA_Infrastructure.Models.Main
         public int CardNumber { get; set; }
         [Column(TypeName = "datetime2")]
         public DateTime MembershipExpiryDate { set; get; }
-
-        //[ForeignKey(nameof(Person))]
-        //public int PersonId { get; set; }
-
         public Person Person { get; set; }
 
-        public ICollection<Property> FirstSides { set; get; } // متنازل
+        public ICollection<PropertyMember> FirstSides { set; get; } // متنازل
 
-        public ICollection<Property> SecondSides { set; get; }  //  متنازل له
+        public ICollection<PropertyMember> SecondSides { set; get; }  //  متنازل له
 
 
     }
