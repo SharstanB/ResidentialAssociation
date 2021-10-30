@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RA_SqlSever.Migrations
 {
-    public partial class setDataBase : Migration
+    public partial class setdatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -33,6 +33,35 @@ namespace RA_SqlSever.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Person",
+                schema: "Main",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    FatherName = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    MotherName = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    Birthdate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    BirthPlace = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    SocialStatus = table.Column<int>(type: "int", nullable: false),
+                    RegistrationNumber = table.Column<int>(type: "int", nullable: false),
+                    IsMarried = table.Column<bool>(type: "bit", nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    JobAddress = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    Income = table.Column<decimal>(type: "decimal(15,5)", nullable: false),
+                    MemberId = table.Column<int>(type: "int", nullable: false),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Person", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Project",
                 schema: "Main",
                 columns: table => new
@@ -50,6 +79,34 @@ namespace RA_SqlSever.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Project", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Member",
+                schema: "Main",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Member_ID = table.Column<int>(type: "int", nullable: false),
+                    AffiliationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SessionNumber = table.Column<int>(type: "int", nullable: false),
+                    DesisionNumber = table.Column<int>(type: "int", nullable: false),
+                    CardNumber = table.Column<int>(type: "int", nullable: false),
+                    MembershipExpiryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Member", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Member_Person_Member_ID",
+                        column: x => x.Member_ID,
+                        principalSchema: "Main",
+                        principalTable: "Person",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -113,64 +170,6 @@ namespace RA_SqlSever.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Person",
-                schema: "Main",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(50)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(50)", nullable: true),
-                    FatherName = table.Column<string>(type: "nvarchar(50)", nullable: true),
-                    MotherName = table.Column<string>(type: "nvarchar(50)", nullable: true),
-                    Birthdate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BirthPlace = table.Column<string>(type: "nvarchar(50)", nullable: true),
-                    SocialStatus = table.Column<int>(type: "int", nullable: false),
-                    RegistrationNumber = table.Column<int>(type: "int", nullable: false),
-                    IsMarried = table.Column<bool>(type: "bit", nullable: false),
-                    Gender = table.Column<int>(type: "int", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(50)", nullable: true),
-                    JobAddress = table.Column<string>(type: "nvarchar(50)", nullable: true),
-                    Income = table.Column<decimal>(type: "decimal(15,5)", nullable: false),
-                    MemberId = table.Column<int>(type: "int", nullable: false),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Person", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Member",
-                schema: "Main",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Member_ID = table.Column<int>(type: "int", nullable: false),
-                    AffiliationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    SessionNumber = table.Column<int>(type: "int", nullable: false),
-                    DesisionNumber = table.Column<int>(type: "int", nullable: false),
-                    CardNumber = table.Column<int>(type: "int", nullable: false),
-                    MembershipExpiryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PersonId = table.Column<int>(type: "int", nullable: false),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Member", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Member_Person_PersonId",
-                        column: x => x.PersonId,
-                        principalSchema: "Main",
-                        principalTable: "Person",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Property",
                 schema: "Main",
                 columns: table => new
@@ -193,15 +192,13 @@ namespace RA_SqlSever.Migrations
                         column: x => x.FirstSideId,
                         principalSchema: "Main",
                         principalTable: "Member",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Property_Member_SecondSideId",
                         column: x => x.SecondSideId,
                         principalSchema: "Main",
                         principalTable: "Member",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Property_Residence_ResidenceId",
                         column: x => x.ResidenceId,
@@ -218,16 +215,11 @@ namespace RA_SqlSever.Migrations
                 column: "ResidenceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Member_PersonId",
+                name: "IX_Member_Member_ID",
                 schema: "Main",
                 table: "Member",
-                column: "PersonId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Person_MemberId",
-                schema: "Main",
-                table: "Person",
-                column: "MemberId");
+                column: "Member_ID",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Property_FirstSideId",
@@ -252,25 +244,10 @@ namespace RA_SqlSever.Migrations
                 schema: "Main",
                 table: "Residence",
                 column: "ProjectId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Person_Member_MemberId",
-                schema: "Main",
-                table: "Person",
-                column: "MemberId",
-                principalSchema: "Main",
-                principalTable: "Member",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Member_Person_PersonId",
-                schema: "Main",
-                table: "Member");
-
             migrationBuilder.DropTable(
                 name: "ExpectedPrice",
                 schema: "Setting");
@@ -284,11 +261,11 @@ namespace RA_SqlSever.Migrations
                 schema: "Main");
 
             migrationBuilder.DropTable(
-                name: "Residence",
+                name: "Member",
                 schema: "Main");
 
             migrationBuilder.DropTable(
-                name: "Project",
+                name: "Residence",
                 schema: "Main");
 
             migrationBuilder.DropTable(
@@ -296,7 +273,7 @@ namespace RA_SqlSever.Migrations
                 schema: "Main");
 
             migrationBuilder.DropTable(
-                name: "Member",
+                name: "Project",
                 schema: "Main");
         }
     }

@@ -24,8 +24,8 @@ namespace RA_Infrastructure.Models.Main
         [Column(TypeName = "datetime2")]
         public DateTime MembershipExpiryDate { set; get; }
 
-        [ForeignKey(nameof(Person))]
-        public int PersonId { get; set; }
+        //[ForeignKey(nameof(Person))]
+        //public int PersonId { get; set; }
 
         public Person Person { get; set; }
 

@@ -31,10 +31,18 @@ namespace RA_SqlSever
         {
             modelBuilder.Entity<Member>().HasMany(t => t.FirstSides)
             .WithOne(g => g.FirstSide)
-            .HasForeignKey(g => g.FirstSideId).OnDelete(DeleteBehavior.Cascade);
+            .HasForeignKey(g => g.FirstSideId)
+            .OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<Member>().HasMany(t => t.SecondSides)
             .WithOne(g => g.SecondSide)
-            .HasForeignKey(g => g.SecondSideId).OnDelete(DeleteBehavior.ClientCascade);
+            .HasForeignKey(g => g.SecondSideId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Member>()
+              .HasOne(a => a.Person)
+              .WithOne(b => b.Member)
+              .HasForeignKey<Member>(b => b.Member_ID);
 
 
         }

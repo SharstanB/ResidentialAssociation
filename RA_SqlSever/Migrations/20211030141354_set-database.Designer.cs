@@ -10,8 +10,8 @@ using RA_SqlSever;
 namespace RA_SqlSever.Migrations
 {
     [DbContext(typeof(RAContext))]
-    [Migration("20211027122917_ondelete-problem")]
-    partial class ondeleteproblem
+    [Migration("20211030141354_set-database")]
+    partial class setdatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -84,15 +84,13 @@ namespace RA_SqlSever.Migrations
                     b.Property<DateTime>("MembershipExpiryDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PersonId")
-                        .HasColumnType("int");
-
                     b.Property<int>("SessionNumber")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PersonId");
+                    b.HasIndex("Member_ID")
+                        .IsUnique();
 
                     b.ToTable("Member", "Main");
                 });
@@ -153,8 +151,6 @@ namespace RA_SqlSever.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MemberId");
 
                     b.ToTable("Person", "Main");
                 });
@@ -320,23 +316,12 @@ namespace RA_SqlSever.Migrations
             modelBuilder.Entity("RA_Infrastructure.Models.Main.Member", b =>
                 {
                     b.HasOne("RA_Infrastructure.Models.Main.Person", "Person")
-                        .WithMany()
-                        .HasForeignKey("PersonId")
+                        .WithOne("Member")
+                        .HasForeignKey("RA_Infrastructure.Models.Main.Member", "Member_ID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Person");
-                });
-
-            modelBuilder.Entity("RA_Infrastructure.Models.Main.Person", b =>
-                {
-                    b.HasOne("RA_Infrastructure.Models.Main.Member", "Member")
-                        .WithMany()
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Member");
                 });
 
             modelBuilder.Entity("RA_Infrastructure.Models.Main.Property", b =>
@@ -344,7 +329,7 @@ namespace RA_SqlSever.Migrations
                     b.HasOne("RA_Infrastructure.Models.Main.Member", "FirstSide")
                         .WithMany("FirstSides")
                         .HasForeignKey("FirstSideId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("RA_Infrastructure.Models.Main.Residence", "Residence")
@@ -356,7 +341,7 @@ namespace RA_SqlSever.Migrations
                     b.HasOne("RA_Infrastructure.Models.Main.Member", "SecondSide")
                         .WithMany("SecondSides")
                         .HasForeignKey("SecondSideId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("FirstSide");
@@ -382,6 +367,11 @@ namespace RA_SqlSever.Migrations
                     b.Navigation("FirstSides");
 
                     b.Navigation("SecondSides");
+                });
+
+            modelBuilder.Entity("RA_Infrastructure.Models.Main.Person", b =>
+                {
+                    b.Navigation("Member");
                 });
 
             modelBuilder.Entity("RA_Infrastructure.Models.Main.Residence", b =>
