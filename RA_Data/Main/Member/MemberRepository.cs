@@ -29,7 +29,7 @@ namespace RA_Repositories.Main
             throw new NotImplementedException();
         }
 
-        public  OperationResult<GetMemberInfo> GetMembers()
+        public OperationResult<GetMemberInfo> GetMembers()
         {
             OperationResult<GetMemberInfo> result 
                 = new OperationResult<GetMemberInfo>();
